@@ -1,0 +1,46 @@
+<resources>
+	<string name="app_name">TTS</string>
+	<string name="action_settings">Settings</string>
+
+	<!-- Strings used for fragments for navigation -->
+	<string name="pronounce_fragment_label">pronounce</string>
+	<string name="pronounce">Pronounce</string>
+	<string name="query">Query</string>
+
+	<string name="row">row</string>
+	<string-array name="row_pronunciations">
+		<item>ɹəʊ</item>
+		<item>ɹaʊ</item>
+	</string-array>
+
+	<string name="wind">wind</string>
+	<string name="search_description">Search</string>
+	<string-array name="wind_pronunciations">
+		<item>wɪnd</item>
+		<item>waɪnd</item>
+	</string-array>
+
+	<string-array name="words">
+		<item>row</item>
+		<item>wind</item>
+	</string-array>
+
+	<string-array name="pronunciations">
+		<item>ɹəʊ</item>
+		<item>ɹaʊ</item>
+		<item>wɪnd</item>
+		<item>waɪnd</item>
+	</string-array>
+
+	<string-array name="locales">
+		<item>GB</item>
+		<item>US</item>
+		<item>AU</item>
+		<item>CA</item>
+		<item>IE</item>
+		<item>NZ</item>
+		<item>ZA</item>
+		<item>SG</item>
+	</string-array>
+
+</resources>
