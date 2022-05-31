@@ -1,5 +1,6 @@
-package org.test.tts
+package org.sqlunet.tts
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -10,8 +11,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.material.snackbar.Snackbar
-import org.test.tts.databinding.ActivityMainBinding
+import org.sqlunet.tts.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,7 +47,23 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.action_voices -> {
+                Voices().discoverVoices(this, { v -> Log.d("VOICES", v.toString()) })
+                return true
+            }
+            R.id.action_voice -> {
+                Voices().discoverVoice(this) { v -> Log.d("VOICE", v.toString()) }
+                return true
+            }
+            R.id.action_languages -> {
+                Voices().discoverLanguages(this) { v -> Log.d("LANGUAGES", v.toString()) }
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

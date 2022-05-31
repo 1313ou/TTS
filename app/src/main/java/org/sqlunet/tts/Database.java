@@ -1,4 +1,4 @@
-package org.test.tts;
+package org.sqlunet.tts;
 
 import android.content.Context;
 import android.database.Cursor;

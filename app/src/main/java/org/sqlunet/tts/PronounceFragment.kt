@@ -1,4 +1,4 @@
-package org.test.tts
+package org.sqlunet.tts
 
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import org.test.tts.databinding.FragmentPronounceBinding
+import org.sqlunet.tts.databinding.FragmentPronounceBinding
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -71,7 +71,7 @@ class PronounceFragment : Fragment() {
                 val l = l1 ?: l0
                 val s = String.format("%s /%s/ %s", w, v, l)
                 Log.d("PRONOUNCE", s)
-                TTS.pronounce(requireContext(), w, v, l)
+            TTS.pronounce(requireContext(), w, v, l)
                 /*
                 Snackbar.make(v, s, Snackbar.LENGTH_LONG)
                     .setAnchorView(this.view)

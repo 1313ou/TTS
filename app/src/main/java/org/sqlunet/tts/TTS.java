@@ -1,4 +1,4 @@
-package org.test.tts;
+package org.sqlunet.tts;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
@@ -39,7 +39,7 @@ public class TTS
 		}
 	}
 
-	public static void pronounce(Context context, String word, String ipa, String locale)
+	public static void pronounce(final Context context, final String word, final String ipa, final String locale)
 	{
 		new TTS(context, word, ipa, toLocale(locale));
 	}

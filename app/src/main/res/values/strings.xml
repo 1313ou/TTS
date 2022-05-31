@@ -1,36 +1,17 @@
 <resources>
 	<string name="app_name">TTS</string>
 	<string name="action_settings">Settings</string>
+	<string name="action_voices">Voices</string>
+	<string name="action_voice">Voice</string>
+	<string name="action_languages">Languages</string>
 
-	<!-- Strings used for fragments for navigation -->
-	<string name="pronounce_fragment_label">pronounce</string>
+	<!-- labels -->
+	<string name="pronounce_fragment_label">Pronounce</string>
 	<string name="pronounce">Pronounce</string>
-	<string name="query">Query</string>
 
-	<string name="row">row</string>
-	<string-array name="row_pronunciations">
-		<item>ɹəʊ</item>
-		<item>ɹaʊ</item>
-	</string-array>
-
-	<string name="wind">wind</string>
+	<!-- descriptions -->
 	<string name="search_description">Search</string>
-	<string-array name="wind_pronunciations">
-		<item>wɪnd</item>
-		<item>waɪnd</item>
-	</string-array>
-
-	<string-array name="words">
-		<item>row</item>
-		<item>wind</item>
-	</string-array>
-
-	<string-array name="pronunciations">
-		<item>ɹəʊ</item>
-		<item>ɹaʊ</item>
-		<item>wɪnd</item>
-		<item>waɪnd</item>
-	</string-array>
+	<string name="pronunciation_description">pronunciation</string>
 
 	<string-array name="locales">
 		<item>GB</item>
@@ -42,5 +23,12 @@
 		<item>ZA</item>
 		<item>SG</item>
 	</string-array>
+	<string name="title_activity_settings">SettingsActivity</string>
+
+	<!-- Titles -->
+	<string name="voices_header">Voices</string>
+
+	<!-- Voices Preferences -->
+	<string name="voices_title">Voice</string>
 
 </resources>

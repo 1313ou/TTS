@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	package="org.test.tts">
+	package="org.sqlunet.tts">
 
 	<application
 		android:allowBackup="true"
@@ -13,6 +13,10 @@
 		android:supportsRtl="true"
 		android:theme="@style/Theme.TTS"
 		tools:targetApi="31">
+		<activity
+			android:name=".SettingsActivity"
+			android:exported="false"
+			android:label="@string/title_activity_settings" />
 		<activity
 			android:name=".MainActivity"
 			android:exported="true"
