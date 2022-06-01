@@ -1,5 +1,7 @@
 package org.sqlunet.tts
 
+import android.app.SearchManager
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log

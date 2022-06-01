@@ -1,5 +1,7 @@
 package org.sqlunet.tts
 
+import android.app.SearchManager
+import android.content.ComponentName
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import org.sqlunet.tts.databinding.FragmentPronounceBinding
 
 /**
@@ -24,11 +28,10 @@ class PronounceFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentPronounceBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,49 +41,59 @@ class PronounceFragment : Fragment() {
         binding.word.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextChange(newText: String): Boolean {
+                binding.pronunciations.adapter = null
                 return false
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
                 val w = binding.word.query.toString()
                 Log.d("QUERY", w)
-                val pronunciations = Database.query(w, requireContext());
+                val pronunciations = Database.query(w, requireContext())
                 val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, pronunciations)
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.pronunciations.adapter = adapter
                 return true
             }
         })
-        binding.pronunciations.onItemSelectedListener =  object : AdapterView.OnItemSelectedListener{
+        binding.pronunciations.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 binding.locales.visibility = View.VISIBLE
             }
+
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selected = parent?.getItemAtPosition(position) as Database.Pronunciation
                 Log.d("SELECT", selected.toString())
-                binding.locales.visibility = if(selected.hasVariety()) View.INVISIBLE else View.VISIBLE
+                binding.locales.visibility = if (selected.hasVariety()) View.INVISIBLE else View.VISIBLE
             }
         }
         binding.pronounce.setOnClickListener {
 
-                val w = binding.word.query.toString()
-                val p = binding.pronunciations.selectedItem as Database.Pronunciation
-                val v = p.value
-                val l1 = p.variety
-                val l0 = binding.locales.selectedItem.toString()
-                val l = l1 ?: l0
-                val s = String.format("%s /%s/ %s", w, v, l)
-                Log.d("PRONOUNCE", s)
-            TTS.pronounce(requireContext(), w, v, l)
-                /*
-                Snackbar.make(v, s, Snackbar.LENGTH_LONG)
-                    .setAnchorView(this.view)
-                    .setAction(R.string.pronounce) {
-                        TTS.pronounce(requireContext(), w, p, l)
-                    }.show()
-                 */
-            }
+            val word = binding.word.query.toString()
+            val p = binding.pronunciations.selectedItem as Database.Pronunciation
+            val pronunciation = p.value
+            val l1 = p.variety
+            val l0 = binding.locales.selectedItem.toString()
+            val lang = l1 ?: l0
+            val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())
+            val voice = pref.getString("voice", null)
+            val s = String.format("%s /%s/ %s %s", word, pronunciation, lang, voice)
+            Log.d("PRONOUNCE", s)
+            TTS.pronounce(requireContext(), word, pronunciation, lang, if (voice != null && voice.isNotEmpty()) voice else null)
+            /*
+            Snackbar.make(v, s, Snackbar.LENGTH_LONG)
+                .setAnchorView(this.view)
+                .setAction(R.string.pronounce) {
+                    TTS.pronounce(requireContext(), w, p, l)
+                }.show()
+             */
         }
+
+        // search info
+        val componentName: ComponentName? = activity?.getComponentName()
+        val searchManager = activity?.getSystemService(AppCompatActivity.SEARCH_SERVICE) as SearchManager
+        val searchableInfo = searchManager.getSearchableInfo(componentName)
+        binding.word.setSearchableInfo(searchableInfo)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

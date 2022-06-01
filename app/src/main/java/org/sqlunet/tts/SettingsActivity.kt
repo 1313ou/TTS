@@ -15,10 +15,10 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.settings_activity)
         if (savedInstanceState == null) {
             Voices().discoverVoices(this) { voices ->
-                run {
 
+                run {
                     val voicesNames: Array<String?> = voices.stream().map { v -> v.name }.toArray { size -> arrayOfNulls<String>(size) }
-                    val voicesInfos: Array<String?> = voices.stream().map { v -> v.name + " " + v.isNetworkConnectionRequired }.toArray { size -> arrayOfNulls<String>(size) }
+                    val voicesInfos: Array<String?> = voices.stream().map { v -> v.name + " " + if (v.isNetworkConnectionRequired) "N" else "L" }.toArray { size -> arrayOfNulls<String>(size) }
                     val args = Bundle()
                     args.putStringArray("entryValues", voicesNames)
                     args.putStringArray("entries", voicesInfos)
@@ -34,12 +34,6 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    class SettingsFragment0 : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey)
-        }
-    }
-
     class SettingsFragment : PreferenceFragmentCompat() {
 
         @RequiresApi(Build.VERSION_CODES.N)
@@ -50,8 +44,12 @@ class SettingsActivity : AppCompatActivity() {
             val entryValues = arguments?.getStringArray("entryValues")
             val pref = findPreference<ListPreference>("voice")
             if (pref != null) {
-                pref.entries = entries
-                pref.entryValues = entryValues
+                val entries2: MutableList<String?> = entries?.toMutableList() ?: mutableListOf()
+                val entryValues2: MutableList<String?> = entryValues?.toMutableList() ?: mutableListOf()
+                entries2.add("None")
+                entryValues2.add("")
+                pref.entries = entries2.toTypedArray()
+                pref.entryValues = entryValues2.toTypedArray()
             }
         }
     }
