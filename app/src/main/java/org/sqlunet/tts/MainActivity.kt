@@ -1,7 +1,6 @@
 package org.sqlunet.tts
 
 import android.app.SearchManager
-import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -38,6 +37,22 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
+    // S E A R C H
+
+    override fun onResume() {
+        super.onResume()
+        intent.getStringExtra(SearchManager.QUERY)?.let { Log.d("INTENT (resume)", it) }
+        setIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.getStringExtra(SearchManager.QUERY)?.let { Log.d("INTENT (new intent)", it) }
+        setIntent(intent)
+    }
+
+    // M E N U
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -69,6 +84,8 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    // N A V
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)

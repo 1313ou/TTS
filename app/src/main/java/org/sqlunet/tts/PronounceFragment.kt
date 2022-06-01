@@ -2,6 +2,7 @@ package org.sqlunet.tts
 
 import android.app.SearchManager
 import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,6 +25,15 @@ class PronounceFragment : Fragment() {
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().intent?.let {
+            Log.d("INTENT", "in fragment " + it.toString())
+            it.getStringExtra(SearchManager.QUERY)?.let { Log.d("INTENT", it) }
+            handleSearchIntent(it)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,5 +108,23 @@ class PronounceFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun handleSearchIntent(intent: Intent?) {
+        val action = intent?.action
+        val isActionView = Intent.ACTION_VIEW == action
+        if (isActionView || Intent.ACTION_SEARCH == action) {
+            // search query submit (SEARCH) or suggestion selection (when a suggested item is selected) (VIEW)
+            val query = intent?.getStringExtra(SearchManager.QUERY)
+            if (query != null) {
+                if (isActionView) {
+                    binding.word.clearFocus()
+                    binding.word.setFocusable(false)
+                    binding.word.setQuery("", false)
+                    binding.word.setIconified(true)
+                }
+                binding.word.setQuery(query, true);
+            }
+        }
     }
 }
