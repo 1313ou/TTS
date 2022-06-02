@@ -22,4 +22,14 @@
 		android:orderInCategory="120"
 		android:title="@string/action_languages"
 		app:showAsAction="never" />
+	<item
+		android:id="@+id/action_engines"
+		android:orderInCategory="130"
+		android:title="@string/action_engines"
+		app:showAsAction="never" />
+	<item
+		android:id="@+id/action_engine"
+		android:orderInCategory="131"
+		android:title="@string/action_engine"
+		app:showAsAction="never" />
 </menu>

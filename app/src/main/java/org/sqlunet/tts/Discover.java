@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-public class Voices
+public class Discover
 {
 	static public final String TAG = "__VOICE__";
 
@@ -79,6 +79,48 @@ public class Voices
 
 			Voice voice = tts.getVoice();
 			consumer.accept(voice);
+		});
+	}
+
+	public void discoverEngines(final Context context, final Consumer<List<TextToSpeech.EngineInfo>> consumer)
+	{
+		this.tts = new TextToSpeech(context, status -> {
+
+			if (status != TextToSpeech.SUCCESS)
+			{
+				Log.e(TAG, "Init failed");
+				return;
+			}
+
+			if (tts == null)
+			{
+				Log.e(TAG, "Null TTS");
+				return;
+			}
+
+			List<TextToSpeech.EngineInfo> engines = tts.getEngines();
+			consumer.accept(engines);
+		});
+	}
+
+	public void discoverEngine(final Context context, final Consumer<String> consumer)
+	{
+		this.tts = new TextToSpeech(context, status -> {
+
+			if (status != TextToSpeech.SUCCESS)
+			{
+				Log.e(TAG, "Init failed");
+				return;
+			}
+
+			if (tts == null)
+			{
+				Log.e(TAG, "Null TTS");
+				return;
+			}
+
+			String engine = tts.getDefaultEngine();
+			consumer.accept(engine);
 		});
 	}
 

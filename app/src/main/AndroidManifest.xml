@@ -13,35 +13,37 @@
 		android:supportsRtl="true"
 		android:theme="@style/Theme.TTS"
 		tools:targetApi="31">
-
+		<activity
+			android:name=".TextActivity"
+			android:exported="false" />
 		<activity
 			android:name=".MainActivity"
 			android:exported="true"
 			android:theme="@style/Theme.TTS">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
+
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH" />
 			</intent-filter>
+
 			<meta-data
 				android:name="android.app.searchable"
 				android:resource="@xml/searchable" />
 		</activity>
-
 		<activity
 			android:name=".SettingsActivity"
 			android:exported="false"
 			android:label="@string/title_activity_settings" />
 
 		<provider
-			android:name="org.sqlunet.tts.SpeakProvider"
+			android:name=".SpeakProvider"
 			android:authorities="@string/speak_authority"
 			android:enabled="true"
 			android:exported="false"
 			tools:ignore="ExportedContentProvider" />
-
 	</application>
 
 </manifest>

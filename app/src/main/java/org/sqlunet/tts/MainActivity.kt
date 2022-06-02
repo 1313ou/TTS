@@ -2,10 +2,13 @@ package org.sqlunet.tts
 
 import android.app.SearchManager
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
@@ -13,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import org.sqlunet.tts.databinding.ActivityMainBinding
+import java.util.stream.Collectors
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
 
@@ -59,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -70,15 +76,45 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_voices -> {
-                Voices().discoverVoices(this, { v -> Log.d("VOICES", v.toString()) })
+                Discover().discoverVoices(this) { voices ->
+                    Log.d("VOICES", voices.toString())
+                    //Toast.makeText(this, voices.toString(), Toast.LENGTH_LONG).show()
+                    val text = voices.stream().map { v -> String.format("%s %s %s", v.name, v.locale, if (v.isNetworkConnectionRequired) "N" else "L") }.collect(Collectors.joining("\n"))
+                    val intent = Intent(this, TextActivity::class.java)
+                    intent.putExtra("text", text)
+                    startActivity(intent)
+                }
                 return true
             }
             R.id.action_voice -> {
-                Voices().discoverVoice(this) { v -> Log.d("VOICE", v.toString()) }
+                Discover().discoverVoice(this) { voice ->
+                    Log.d("VOICE", voice.toString())
+                    Toast.makeText(this, voice.toString(), Toast.LENGTH_LONG).show()
+                }
                 return true
             }
             R.id.action_languages -> {
-                Voices().discoverLanguages(this) { v -> Log.d("LANGUAGES", v.toString()) }
+                Discover().discoverLanguages(this) { languages ->
+                    Log.d("LANGUAGES", languages.toString())
+                    Toast.makeText(this, languages.toString(), Toast.LENGTH_LONG).show()
+                }
+                return true
+            }
+            R.id.action_engines -> {
+                Discover().discoverEngines(this) { engines ->
+                    Log.d("ENGINES", engines.toString())
+                    val text = engines.stream().map { v -> String.format("%s %s", v.label, v.name) }.collect(Collectors.joining("\n"))
+                    val intent = Intent(this, TextActivity::class.java)
+                    intent.putExtra("text", text)
+                    startActivity(intent)
+                }
+                return true
+            }
+            R.id.action_engine -> {
+                Discover().discoverEngine(this) { engine ->
+                    Log.d("ENGINE", engine.toString())
+                    Toast.makeText(this, engine, Toast.LENGTH_LONG).show()
+                }
                 return true
             }
             else -> super.onOptionsItemSelected(item)

@@ -46,7 +46,6 @@ class PronounceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.word.requestFocus()
         binding.word.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 

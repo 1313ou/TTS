@@ -14,7 +14,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
         if (savedInstanceState == null) {
-            Voices().discoverVoices(this) { voices ->
+            Discover().discoverVoices(this) { voices ->
 
                 run {
                     val voicesNames: Array<String?> = voices.stream().map { v -> v.name }.toArray { size -> arrayOfNulls<String>(size) }

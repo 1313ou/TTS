@@ -1,32 +1,25 @@
 <resources>
 
 	<!-- App -->
-	<string name="app_name">TTS</string>
+	<string name="app_name">SqlUNet speak</string>
 
 	<!-- Actions -->
 	<string name="action_voices">Voices</string>
 	<string name="action_voice">Voice</string>
 	<string name="action_languages">Languages</string>
+	<string name="action_engines">Engines</string>
+	<string name="action_engine">Engine</string>
 
 	<!-- Labels -->
 	<string name="pronounce_fragment_label">Pronounce</string>
 	<string name="pronounce">Pronounce</string>
+	<string name="text_fragment_label">Info</string>
+	<string name="text">Info</string>
 
 	<!-- Descriptions -->
 	<string name="search_description">Search</string>
 	<string name="pronunciation_description">pronunciation</string>
 
-	<!-- Locales -->
-	<string-array name="locales" translatable="false">
-		<item>GB</item>
-		<item>US</item>
-		<item>AU</item>
-		<item>CA</item>
-		<item>IE</item>
-		<item>NZ</item>
-		<item>ZA</item>
-		<item>SG</item>
-	</string-array>
 
 	<!-- Settings -->
 	<string name="action_settings">Settings</string>
@@ -35,7 +28,6 @@
 	<string name="voices_title">Voice</string>
 
 	<!-- Search -->
-	<string name="speak_authority" translatable="false">org.sqlunet.speak</string>
 	<string name="hint_search">Search</string>
 
 </resources>

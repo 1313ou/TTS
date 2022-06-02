@@ -1,0 +1,21 @@
+<resources>
+
+	<!-- Locales -->
+	<string-array name="locales" translatable="false">
+		<item>GB</item>
+		<item>US</item>
+		<item>AU</item>
+		<item>IN</item>
+		<item>NG</item>
+
+		<!-- <item>CA</item>-->
+		<!-- <item>IE</item>-->
+		<!-- <item>NZ</item>-->
+		<!-- <item>ZA</item>-->
+		<!-- <item>SG</item>-->
+	</string-array>
+
+	<!-- Search -->
+	<string name="speak_authority" translatable="false">org.sqlunet.speak</string>
+
+</resources>
