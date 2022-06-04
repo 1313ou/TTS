@@ -2,13 +2,21 @@ package org.sqlunet.tts
 
 import android.app.SearchManager
 import android.content.Intent
-import android.os.Build
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.speech.tts.Voice
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
@@ -16,7 +24,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import org.sqlunet.tts.databinding.ActivityMainBinding
-import java.util.stream.Collectors
 
 class MainActivity : AppCompatActivity() {
 
@@ -64,7 +71,6 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -79,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 Discover().discoverVoices(this) { voices ->
                     Log.d("VOICES", voices.toString())
                     //Toast.makeText(this, voices.toString(), Toast.LENGTH_LONG).show()
-                    val text = voices.stream().map { v -> String.format("%s %s %s", v.name, v.locale, if (v.isNetworkConnectionRequired) "N" else "L") }.collect(Collectors.joining("\n"))
+                    val text = voicesToText(voices)
                     val intent = Intent(this, TextActivity::class.java)
                     intent.putExtra("text", text)
                     startActivity(intent)
@@ -103,7 +109,8 @@ class MainActivity : AppCompatActivity() {
             R.id.action_engines -> {
                 Discover().discoverEngines(this) { engines ->
                     Log.d("ENGINES", engines.toString())
-                    val text = engines.stream().map { v -> String.format("%s %s", v.label, v.name) }.collect(Collectors.joining("\n"))
+                    val sb = enginesToText(engines)
+                    val text = SpannableString.valueOf(sb)
                     val intent = Intent(this, TextActivity::class.java)
                     intent.putExtra("text", text)
                     startActivity(intent)
@@ -114,6 +121,9 @@ class MainActivity : AppCompatActivity() {
                 Discover().discoverEngine(this) { engine ->
                     Log.d("ENGINE", engine.toString())
                     Toast.makeText(this, engine, Toast.LENGTH_LONG).show()
+
+                    val intent = Intent(this, TextActivity::class.java)
+                    startActivity(intent)
                 }
                 return true
             }
@@ -127,5 +137,43 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    // F O R M A T
+
+
+    private fun voicesToText(voices: List<Voice>): CharSequence {
+        val sb = SpannableStringBuilder()
+        voices.forEach { v ->
+            var p = sb.length
+            sb.append(v.name)
+            sb.setSpan(RelativeSizeSpan(1.2f), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sb.setSpan(StyleSpan(Typeface.BOLD), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sb.setSpan(ForegroundColorSpan(Color.BLUE), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sb.append(' ')
+            p = sb.length
+            sb.append(v.locale.toString())
+            sb.setSpan(ForegroundColorSpan(Color.MAGENTA), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sb.append(' ')
+            sb.append(if (v.isNetworkConnectionRequired) "network" else "local")
+            sb.append('\n')
+        }
+        return sb
+    }
+
+    private fun enginesToText(engines: List<TextToSpeech.EngineInfo>): CharSequence {
+        val sb = SpannableStringBuilder()
+        engines.forEach { e ->
+            var p = sb.length
+            sb.append(e.label)
+            sb.setSpan(RelativeSizeSpan(1.2f), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sb.setSpan(StyleSpan(Typeface.BOLD), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sb.append(' ')
+            p = sb.length
+            sb.append(e.name)
+            sb.setSpan(ForegroundColorSpan(Color.MAGENTA), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sb.append('\n')
+        }
+        return sb
     }
 }

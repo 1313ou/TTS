@@ -10,34 +10,8 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-
 public class Database extends SQLiteAssetHelper
 {
-	public static class Pronunciation
-	{
-		public final String value;
-
-		public final String variety;
-
-		public Pronunciation(final String value, final String variety)
-		{
-			this.value = value;
-			this.variety = variety;
-		}
-
-		public boolean hasVariety()
-		{
-			return variety != null;
-		}
-
-		@NonNull
-		@Override
-		public String toString()
-		{
-			return variety == null ? value : String.format("[%s] %s", variety, value);
-		}
-	}
 
 	private static final String DATABASE_NAME = "sqlunet-speak.db";
 

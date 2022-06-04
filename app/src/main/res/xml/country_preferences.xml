@@ -3,8 +3,8 @@
 	<PreferenceCategory app:title="@string/speak_header">
 
 		<ListPreference
-			app:key="voice"
-			app:title="@string/voice_title"
+			app:key="country"
+			app:title="@string/country_title"
 			app:useSimpleSummaryProvider="true" />
 
 	</PreferenceCategory>

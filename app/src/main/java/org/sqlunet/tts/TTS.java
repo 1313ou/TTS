@@ -19,6 +19,10 @@ public class TTS
 
 	static private Locale toLocale(final String locale)
 	{
+		if (locale == null)
+		{
+			return DEFAULT_LOCALE;
+		}
 		switch (locale)
 		{
 			case "GB":
@@ -61,27 +65,34 @@ public class TTS
 			}
 			Log.d(TAG, "Init succeeded");
 
-			int result = tts.setLanguage(locale);
-			if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
+			if (locale != null)
 			{
-				Toast.makeText(context, "Language not supported", Toast.LENGTH_SHORT).show();
-				Log.e(TAG, "Set language failed " + locale);
-				return;
+				int result = tts.setLanguage(locale);
+				if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
+				{
+					Toast.makeText(context, "Language not supported", Toast.LENGTH_SHORT).show();
+					Log.e(TAG, "Set language failed " + locale);
+					return;
+				}
 			}
 			if (voiceName != null)
 			{
-				Voice voice = null;
+				Voice voice;
 				try
 				{
 					voice = getVoice(voiceName);
 					if (voice != null)
 					{
-						result = tts.setVoice(voice);
-						if (result != TextToSpeech.SUCCESS)
+						if (locale != null && voice.getLocale().getCountry().equals(locale.getCountry()))
 						{
-							Toast.makeText(context, "Voice " + voiceName + " failed", Toast.LENGTH_SHORT).show();
-							Log.e(TAG, "Error voice " + voiceName + " failed");
-							return;
+							Log.e(TAG, "Set voice " + voiceName);
+							int result = tts.setVoice(voice);
+							if (result != TextToSpeech.SUCCESS)
+							{
+								Toast.makeText(context, "Voice " + voiceName + " failed", Toast.LENGTH_SHORT).show();
+								Log.e(TAG, "Error voice " + voiceName + " failed");
+								return;
+							}
 						}
 					}
 					else
@@ -127,7 +138,7 @@ public class TTS
 					Log.e(TAG, "error " + s);
 				}
 			});
-			Log.d(TAG, "run " + written + " " + text);
+			Log.d(TAG, "pronounce " + written + " " + ipa + " " + text);
 			tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, written);
 		});
 	}

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import com.google.android.material.snackbar.Snackbar
 import org.sqlunet.tts.databinding.FragmentPronounceBinding
 
 /**
@@ -70,7 +71,7 @@ class PronounceFragment : Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selected = parent?.getItemAtPosition(position) as Database.Pronunciation
+                val selected = parent?.getItemAtPosition(position) as Pronunciation
                 Log.d("SELECT", selected.toString())
                 binding.locales.visibility = if (selected.hasVariety()) View.INVISIBLE else View.VISIBLE
             }
@@ -78,23 +79,26 @@ class PronounceFragment : Fragment() {
         binding.pronounce.setOnClickListener {
 
             val word = binding.word.query.toString()
-            val p = binding.pronunciations.selectedItem as Database.Pronunciation
-            val pronunciation = p.value
-            val l1 = p.variety
-            val l0 = binding.locales.selectedItem.toString()
-            val lang = l1 ?: l0
-            val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())
-            val voice = pref.getString("voice", null)
-            val s = String.format("%s /%s/ %s %s", word, pronunciation, lang, voice)
-            Log.d("PRONOUNCE", s)
-            TTS.pronounce(requireContext(), word, pronunciation, lang, if (voice != null && voice.isNotEmpty()) voice else null)
-            /*
-            Snackbar.make(v, s, Snackbar.LENGTH_LONG)
-                .setAnchorView(this.view)
-                .setAction(R.string.pronounce) {
-                    TTS.pronounce(requireContext(), w, p, l)
-                }.show()
-             */
+            val p = binding.pronunciations.selectedItem as Pronunciation?
+            if (p != null) {
+                val pronunciation = p.ipa
+                val l1 = p.variety
+                val l0 = binding.locales.selectedItem.toString()
+                val lang = l1 ?: l0
+                val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                val voice = pref.getString("voice", null)
+                val s = String.format("%s /%s/, %s, %s", word, pronunciation, lang, voice)
+                Log.d("PRONOUNCE", s)
+                TTS.pronounce(requireContext(), word, pronunciation, lang, if (voice != null && voice.isNotEmpty()) voice else null)
+                this.view?.let { it1 ->
+                    Snackbar.make(it1, s, Snackbar.LENGTH_LONG)
+                        .setAnchorView(binding.word)
+                        //.setAction(R.string.pronounce) {
+                        //    TTS.pronounce(requireContext(), w, p, l)
+                        //}
+                        .show()
+                }
+            }
         }
 
         // search info
