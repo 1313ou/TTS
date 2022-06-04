@@ -9,12 +9,13 @@
 	<string name="action_languages">Languages</string>
 	<string name="action_engines">Engines</string>
 	<string name="action_engine">Engine</string>
+	<string name="action_examples">Examples</string>
 
 	<!-- Labels -->
-	<string name="pronounce_fragment_label">Pronounce</string>
+	<string name="pronounce_fragment_label">Speak</string>
+	<string name="text_fragment_label">Speak</string>
 	<string name="pronounce">Pronounce</string>
-	<string name="text_fragment_label">Info</string>
-	<string name="text">Info</string>
+	<string name="text">Speak</string>
 
 	<!-- Descriptions -->
 	<string name="search_description">Search</string>

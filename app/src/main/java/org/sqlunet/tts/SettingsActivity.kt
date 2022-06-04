@@ -18,9 +18,9 @@ class SettingsActivity : AppCompatActivity() {
                     val voicesNames: Array<String?> = voices.stream().map { v -> v.name }.toArray { size -> arrayOfNulls<String>(size) }
                     val voicesInfos: Array<String?> = voices.stream().map { v -> v.name + " " + if (v.isNetworkConnectionRequired) "N" else "L" }.toArray { size -> arrayOfNulls<String>(size) }
                     val args = Bundle()
-                    args.putStringArray(VoiceFragment.VOICE_ENTRY_VALUES, voicesNames)
-                    args.putStringArray(VoiceFragment.VOICE_ENTRIES, voicesInfos)
-                    val f = VoiceFragment()
+                    args.putStringArray(VoiceSettingsFragment.VOICE_ENTRY_VALUES, voicesNames)
+                    args.putStringArray(VoiceSettingsFragment.VOICE_ENTRIES, voicesInfos)
+                    val f = VoiceSettingsFragment()
                     f.arguments = args
                     supportFragmentManager
                         .beginTransaction()
@@ -33,9 +33,9 @@ class SettingsActivity : AppCompatActivity() {
                     val languagesNames: Array<String?> = languages.stream().map { l -> l.toString() }.toArray { size -> arrayOfNulls<String>(size) }
                     val languagesInfos: Array<String?> = languages.stream().map { l -> l.country }.toArray { size -> arrayOfNulls<String>(size) }
                     val args = Bundle()
-                    args.putStringArray(CountryFragment.COUNTRY_ENTRY_VALUES, languagesNames)
-                    args.putStringArray(CountryFragment.COUNTRY_ENTRIES, languagesInfos)
-                    val f = CountryFragment()
+                    args.putStringArray(CountrySettingsFragment.COUNTRY_ENTRY_VALUES, languagesNames)
+                    args.putStringArray(CountrySettingsFragment.COUNTRY_ENTRIES, languagesInfos)
+                    val f = CountrySettingsFragment()
                     f.arguments = args
                     supportFragmentManager
                         .beginTransaction()

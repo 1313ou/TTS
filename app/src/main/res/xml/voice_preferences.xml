@@ -2,10 +2,10 @@
 
 	<PreferenceCategory app:title="@string/speak_header">
 
-		<ListPreference
+		<MultiSelectListPreference
 			app:key="voice"
 			app:title="@string/voice_title"
-			app:useSimpleSummaryProvider="true" />
+			app:useSimpleSummaryProvider="false" />
 
 	</PreferenceCategory>
 

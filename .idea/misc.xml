@@ -10,7 +10,9 @@
         <entry key="app/src/main/res/drawable/ic_speak.xml" value="0.3725" />
         <entry key="app/src/main/res/drawable/ic_speak2.xml" value="0.3725" />
         <entry key="app/src/main/res/drawable/ic_speak3.xml" value="0.266" />
+        <entry key="app/src/main/res/layout/activity_examples.xml" value="0.28098229583095374" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.30480072463768115" />
+        <entry key="app/src/main/res/layout/content_examples.xml" value="0.1519925857275255" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/fragment_pronounce.xml" value="0.1" />

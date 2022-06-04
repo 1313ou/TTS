@@ -8,26 +8,22 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import org.sqlunet.tts.databinding.ActivityTextBinding
+import org.sqlunet.tts.databinding.ActivityExamplesBinding
 
-class TextActivity : AppCompatActivity() {
+class ExamplesActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityTextBinding
+    private lateinit var binding: ActivityExamplesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
 
-        binding = ActivityTextBinding.inflate(layoutInflater)
+        binding = ActivityExamplesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
-        val title = intent?.getCharSequenceExtra("title")
-        if (title != null) {
-            binding.toolbar.subtitle = title
-        }
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -36,7 +32,6 @@ class TextActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
     }
 
     // N A V

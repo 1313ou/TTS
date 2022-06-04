@@ -24,6 +24,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import org.sqlunet.tts.databinding.ActivityMainBinding
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -88,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                     val text = voicesToText(voices)
                     val intent = Intent(this, TextActivity::class.java)
                     intent.putExtra("text", text)
+                    intent.putExtra("title", "Voices")
                     startActivity(intent)
                 }
                 return true
@@ -102,7 +104,12 @@ class MainActivity : AppCompatActivity() {
             R.id.action_languages -> {
                 Discover().discoverLanguages(this) { languages ->
                     Log.d("LANGUAGES", languages.toString())
-                    Toast.makeText(this, languages.toString(), Toast.LENGTH_LONG).show()
+                    val sb = languagesToText(languages)
+                    val text = SpannableString.valueOf(sb)
+                    val intent = Intent(this, TextActivity::class.java)
+                    intent.putExtra("text", text)
+                    intent.putExtra("title", "Languages")
+                    startActivity(intent)
                 }
                 return true
             }
@@ -113,6 +120,7 @@ class MainActivity : AppCompatActivity() {
                     val text = SpannableString.valueOf(sb)
                     val intent = Intent(this, TextActivity::class.java)
                     intent.putExtra("text", text)
+                    intent.putExtra("title", "Engines")
                     startActivity(intent)
                 }
                 return true
@@ -121,10 +129,12 @@ class MainActivity : AppCompatActivity() {
                 Discover().discoverEngine(this) { engine ->
                     Log.d("ENGINE", engine.toString())
                     Toast.makeText(this, engine, Toast.LENGTH_LONG).show()
-
-                    val intent = Intent(this, TextActivity::class.java)
-                    startActivity(intent)
                 }
+                return true
+            }
+            R.id.action_examples -> {
+                val intent = Intent(this, ExamplesActivity::class.java)
+                startActivity(intent)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
@@ -171,6 +181,22 @@ class MainActivity : AppCompatActivity() {
             sb.append(' ')
             p = sb.length
             sb.append(e.name)
+            sb.setSpan(ForegroundColorSpan(Color.MAGENTA), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sb.append('\n')
+        }
+        return sb
+    }
+
+    private fun languagesToText(languages: List<Locale>): CharSequence {
+        val sb = SpannableStringBuilder()
+        languages.forEach { e ->
+            var p = sb.length
+            sb.append(e.language)
+            sb.setSpan(RelativeSizeSpan(1.2f), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sb.setSpan(StyleSpan(Typeface.BOLD), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sb.append(' ')
+            p = sb.length
+            sb.append(e.country)
             sb.setSpan(ForegroundColorSpan(Color.MAGENTA), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             sb.append('\n')
         }

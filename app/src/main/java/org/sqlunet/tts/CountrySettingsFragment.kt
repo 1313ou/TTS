@@ -6,7 +6,7 @@ import androidx.annotation.RequiresApi
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 
-class CountryFragment : PreferenceFragmentCompat() {
+class CountrySettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
         const val COUNTRY_PREF = "country"

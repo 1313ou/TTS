@@ -11,6 +11,8 @@ import android.widget.Toast;
 import java.util.Locale;
 import java.util.Set;
 
+import androidx.annotation.Nullable;
+
 public class TTS
 {
 	static public final String TAG = "__TTS__";
@@ -138,7 +140,7 @@ public class TTS
 					Log.e(TAG, "error " + s);
 				}
 			});
-			Log.d(TAG, "pronounce " + written + " " + ipa + " " + text);
+			Log.d(TAG, "pronounce " + written + " " + ipa + " " + '"' + text + '"');
 			tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, written);
 		});
 	}

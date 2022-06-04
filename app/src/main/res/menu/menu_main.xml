@@ -32,4 +32,9 @@
 		android:orderInCategory="131"
 		android:title="@string/action_engine"
 		app:showAsAction="never" />
+	<item
+		android:id="@+id/action_examples"
+		android:orderInCategory="140"
+		android:title="@string/action_examples"
+		app:showAsAction="never" />
 </menu>
