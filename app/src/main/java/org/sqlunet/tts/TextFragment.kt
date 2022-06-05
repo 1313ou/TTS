@@ -27,7 +27,7 @@ open class TextFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val text = activity?.intent?.getCharSequenceExtra("text")
         if (text != null) {
-            binding.text.setText(text)
+            binding.text.text = text
         }
     }
 

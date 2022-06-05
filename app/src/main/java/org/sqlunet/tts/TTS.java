@@ -1,7 +1,6 @@
 package org.sqlunet.tts;
 
 import android.content.Context;
-import android.os.RemoteException;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.speech.tts.Voice;
@@ -10,8 +9,6 @@ import android.widget.Toast;
 
 import java.util.Locale;
 import java.util.Set;
-
-import androidx.annotation.Nullable;
 
 public class TTS
 {
@@ -80,34 +77,25 @@ public class TTS
 			if (voiceName != null)
 			{
 				Voice voice;
-				try
+				voice = getVoice(voiceName);
+				if (voice != null)
 				{
-					voice = getVoice(voiceName);
-					if (voice != null)
+					if (locale != null && voice.getLocale().getCountry().equals(locale.getCountry()))
 					{
-						if (locale != null && voice.getLocale().getCountry().equals(locale.getCountry()))
+						Log.e(TAG, "Set voice " + voiceName);
+						int result = tts.setVoice(voice);
+						if (result != TextToSpeech.SUCCESS)
 						{
-							Log.e(TAG, "Set voice " + voiceName);
-							int result = tts.setVoice(voice);
-							if (result != TextToSpeech.SUCCESS)
-							{
-								Toast.makeText(context, "Voice " + voiceName + " failed", Toast.LENGTH_SHORT).show();
-								Log.e(TAG, "Error voice " + voiceName + " failed");
-								return;
-							}
+							Toast.makeText(context, "Voice " + voiceName + " failed", Toast.LENGTH_SHORT).show();
+							Log.e(TAG, "Error voice " + voiceName + " failed");
+							return;
 						}
 					}
-					else
-					{
-						Toast.makeText(context, "Voice " + voiceName + " not found", Toast.LENGTH_SHORT).show();
-						Log.e(TAG, "Error voice " + voiceName + " not found");
-						return;
-					}
 				}
-				catch (RemoteException e)
+				else
 				{
-					Toast.makeText(context, "Voice " + voiceName + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
-					Log.e(TAG, "Error voice " + voiceName + " " + e.getMessage());
+					Toast.makeText(context, "Voice " + voiceName + " not found", Toast.LENGTH_SHORT).show();
+					Log.e(TAG, "Error voice " + voiceName + " not found");
 					return;
 				}
 			}
@@ -145,7 +133,7 @@ public class TTS
 		});
 	}
 
-	private Voice getVoice(String voiceName) throws RemoteException
+	private Voice getVoice(String voiceName)
 	{
 		Set<Voice> voices = tts.getVoices();
 		if (voices == null)

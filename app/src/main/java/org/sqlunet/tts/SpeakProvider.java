@@ -39,7 +39,6 @@ public class SpeakProvider extends ContentProvider
 	private static final String SEARCH_WORD_PATH = "suggest_word";
 	private static final String URI = SEARCH_WORD_PATH + "/" + SearchManager.SUGGEST_URI_PATH_QUERY;
 	private static final String TABLE = "words";
-	private static final String QUERY = "SELECT word FROM words WHERE word = '%s';";
 
 	static
 	{
@@ -63,14 +62,6 @@ public class SpeakProvider extends ContentProvider
 	private SQLiteDatabase db;
 
 	// C O N S T R U C T O R
-
-	/**
-	 * Constructor
-	 */
-	public SpeakProvider()
-	{
-		Log.d(TAG, "Construct");
-	}
 
 	@Override
 	public boolean onCreate()
@@ -142,7 +133,6 @@ public class SpeakProvider extends ContentProvider
 
 		// query
 
-		final String table = TABLE;
 		final String[] projection = {"wordid AS _id", "word AS " + SearchManager.SUGGEST_COLUMN_TEXT_1, "word AS " + SearchManager.SUGGEST_COLUMN_QUERY};
 		final String selection = "word LIKE ? || '%'";
 		final String[] selectionArgs = {uriLast};
@@ -150,8 +140,7 @@ public class SpeakProvider extends ContentProvider
 		{
 			try
 			{
-				Cursor cursor = db.query(table, projection, selection, selectionArgs, null, null, null);
-				return cursor;
+				return db.query(TABLE, projection, selection, selectionArgs, null, null, null);
 				// String query = String.format(QUERY, word);
 				// return db.rawQuery(query, null)
 			}

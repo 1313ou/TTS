@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import org.sqlunet.tts.databinding.FragmentPronounceBinding
 
@@ -29,8 +28,8 @@ class PronounceFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        requireActivity().intent?.let {
-            Log.d("INTENT", "in fragment " + it.toString())
+        requireActivity().intent?.let { it ->
+            Log.d("INTENT", "in fragment $it")
             it.getStringExtra(SearchManager.QUERY)?.let { Log.d("INTENT", it) }
             handleSearchIntent(it)
         }
@@ -100,7 +99,7 @@ class PronounceFragment : Fragment() {
         }
 
         // search info
-        val componentName: ComponentName? = activity?.getComponentName()
+        val componentName: ComponentName? = activity?.componentName
         val searchManager = activity?.getSystemService(AppCompatActivity.SEARCH_SERVICE) as SearchManager
         val searchableInfo = searchManager.getSearchableInfo(componentName)
         binding.word.setSearchableInfo(searchableInfo)
@@ -120,11 +119,11 @@ class PronounceFragment : Fragment() {
             if (query != null) {
                 if (isActionView) {
                     binding.word.clearFocus()
-                    binding.word.setFocusable(false)
+                    binding.word.isFocusable = false
                     binding.word.setQuery("", false)
-                    binding.word.setIconified(true)
+                    binding.word.isIconified = true
                 }
-                binding.word.setQuery(query, true);
+                binding.word.setQuery(query, true)
             }
         }
     }

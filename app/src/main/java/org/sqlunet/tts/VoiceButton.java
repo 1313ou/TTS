@@ -19,7 +19,7 @@ public class VoiceButton
 	/**
 	 * Collapsed marker
 	 */
-	static private final char COLLAPSEDCHAR = '@';
+	static private final char COLLAPSED_CHAR = '@';
 
 
 	// I M A G E
@@ -35,7 +35,7 @@ public class VoiceButton
 	static private void appendImageSpans(@NonNull final SpannableStringBuilder sb, @Nullable final CharSequence caption, @NonNull final Object imageSpan, @NonNull final Object clickSpan, @NonNull final Object... extraSpans)
 	{
 		final int from = sb.length();
-		sb.append(COLLAPSEDCHAR);
+		sb.append(COLLAPSED_CHAR);
 		int to = sb.length();
 		sb.setSpan(imageSpan, from, to, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		if (caption != null && caption.length() > 0)
@@ -56,14 +56,22 @@ public class VoiceButton
 	/**
 	 * Append clickable image
 	 *
-	 * @param sb       spannable string builder
+	 * @param sb          spannable string builder
 	 * @param drawableRes drawable res
-	 * @param caption  caption
-	 * @param listener click listener
+	 * @param caption     caption
+	 * @param listener    click listener
 	 */
 	static public void appendClickableImage(@NonNull final SpannableStringBuilder sb, @DrawableRes int drawableRes, @NonNull final CharSequence caption, @NonNull final Runnable listener, @NonNull final Context context)
 	{
-		final ImageSpan span = new ImageSpan(context, drawableRes, DynamicDrawableSpan.ALIGN_CENTER);
+		final ImageSpan span;
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q)
+		{
+			span = new ImageSpan(context, drawableRes, DynamicDrawableSpan.ALIGN_BOTTOM);
+		}
+		else
+		{
+			span = new ImageSpan(context, drawableRes);
+		}
 		final ClickableSpan span2 = new ClickableSpan()
 		{
 			@Override

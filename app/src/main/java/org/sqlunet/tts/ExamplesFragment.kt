@@ -1,8 +1,12 @@
 package org.sqlunet.tts
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.text.method.LinkMovementMethod
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
 
@@ -12,7 +16,10 @@ class ExamplesFragment : TextFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val sb = SpannableStringBuilder()
+        val p = sb.length
         sb.append("Examples\n")
+        sb.setSpan(RelativeSizeSpan(1.2f), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        sb.setSpan(StyleSpan(Typeface.BOLD), p, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         val lexunits = arrayOf(
             LexUnit("agnostic", "aɡˈnɒstɪk", "GB"),
@@ -54,7 +61,7 @@ class ExamplesFragment : TextFragment() {
             }
             sb.append(' ')
             soundButton(sb, lexunit.ipa, lexunit) { lu ->
-                Log.d("CLICK", "click <" + lu + ">")
+                Log.d("CLICK", "click <$lu>")
                 val voice = VoiceSettingsFragment.findVoiceFor(lu.variety, requireContext())
                 Log.d("PRONOUNCE", String.format("%s /%s/, country=%s, voice=%s", lu.word, lu.ipa, lu.variety, voice))
                 TTS.pronounce(requireContext(), lu.word, lu.ipa, lu.variety, if (voice != null && voice.isNotEmpty()) voice else null)
@@ -63,13 +70,13 @@ class ExamplesFragment : TextFragment() {
 
         }
         sb.append('\n')
-        binding.text.setMovementMethod(LinkMovementMethod.getInstance())
-        binding.text.setText(sb)
+        binding.text.movementMethod = LinkMovementMethod.getInstance()
+        binding.text.text = sb
     }
 
     private fun <P> soundButton(sb: SpannableStringBuilder, caption: String, data: P?, consumer: Discover.Consumer<P>): CharSequence {
 
-        VoiceButton.appendClickableImage(sb, R.drawable.ic_speak3, caption, { consumer.accept(data) }, requireContext())
+        VoiceButton.appendClickableImage(sb, R.drawable.ic_speak_button, caption, { consumer.accept(data) }, requireContext())
         return sb
     }
 }

@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         intent.getStringExtra(SearchManager.QUERY)?.let { Log.d("INTENT (resume)", it) }
-        setIntent(intent)
+        intent = intent
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -150,7 +150,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     // F O R M A T
-
 
     private fun voicesToText(voices: List<Voice>): CharSequence {
         val sb = SpannableStringBuilder()

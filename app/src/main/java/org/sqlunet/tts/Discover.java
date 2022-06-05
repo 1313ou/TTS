@@ -1,12 +1,14 @@
 package org.sqlunet.tts;
 
 import android.content.Context;
+import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.Voice;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -55,8 +57,23 @@ public class Discover
 					voices.add(voice);
 				}
 			}
-			//Collections.sort(voices, Comparator.comparing(Voice::getName));
-			Collections.sort(voices, (v1, v2) -> v1.getName().compareTo(v2.getName()));
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+			{
+				Collections.sort(voices, Comparator.comparing(Voice::getName));
+			}
+			else
+			{
+				//noinspection ConstantConditions
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+				{
+					Collections.sort(voices, Comparator.comparing(Voice::getName));
+				}
+				else
+				{
+					//noinspection ComparatorCombinators
+					Collections.sort(voices, (v1, v2) -> v1.getName().compareTo(v2.getName()));
+				}
+			}
 			consumer.accept(voices);
 		});
 	}
@@ -149,7 +166,15 @@ public class Discover
 					locales.add(locale);
 				}
 			}
-			Collections.sort(locales, (l1, l2) -> l1.getCountry().compareTo(l2.getCountry()));
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+			{
+				Collections.sort(locales, Comparator.comparing(Locale::getCountry));
+			}
+			else
+			{
+				//noinspection ComparatorCombinators
+				Collections.sort(locales, (l1, l2) -> l1.getCountry().compareTo(l2.getCountry()));
+			}
 			consumer.accept(locales);
 		});
 	}
