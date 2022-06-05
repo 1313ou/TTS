@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
+import org.sqlunet.speak.Pronunciation;
+
 import java.util.ArrayList;
 import java.util.List;
 

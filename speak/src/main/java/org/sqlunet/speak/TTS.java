@@ -1,4 +1,4 @@
-package org.sqlunet.tts;
+package org.sqlunet.speak;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
@@ -122,10 +122,17 @@ public class TTS
 					tts.shutdown();
 				}
 
+				@Deprecated
 				@Override
-				public void onError(final String s)
+				public void onError(final String utteranceId)
 				{
-					Log.e(TAG, "error " + s);
+					Log.e(TAG, "error " + utteranceId);
+				}
+
+				@Override
+				public void onError(final String utteranceId, int errorCode)
+				{
+					Log.e(TAG, "error " + errorCode + " " + utteranceId);
 				}
 			});
 			Log.d(TAG, "pronounce " + written + " " + ipa + " " + '"' + text + '"');

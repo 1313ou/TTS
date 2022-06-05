@@ -1,4 +1,4 @@
-package org.sqlunet.tts;
+package org.sqlunet.speak;
 
 import androidx.annotation.NonNull;
 

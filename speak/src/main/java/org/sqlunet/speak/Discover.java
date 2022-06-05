@@ -1,4 +1,4 @@
-package org.sqlunet.tts;
+package org.sqlunet.speak;
 
 import android.content.Context;
 import android.os.Build;

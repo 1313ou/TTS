@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import org.sqlunet.speak.Pronunciation
+import org.sqlunet.speak.TTS
 import org.sqlunet.tts.databinding.FragmentPronounceBinding
 
 /**

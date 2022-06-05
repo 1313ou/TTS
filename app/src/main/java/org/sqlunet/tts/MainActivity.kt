@@ -23,6 +23,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import org.sqlunet.speak.Discover
 import org.sqlunet.tts.databinding.ActivityMainBinding
 import java.util.*
 

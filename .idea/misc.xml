@@ -22,6 +22,7 @@
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.3" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.265" />
         <entry key="app/src/main/res/xml/voice_preferences.xml" value="0.5143651529193698" />
+        <entry key="speak/src/main/res/drawable/ic_speak_button.xml" value="0.319" />
       </map>
     </option>
   </component>
@@ -29,6 +30,7 @@
     <pattern value="org.sqlunet.tts.TTS" method="TTS" />
     <pattern value="org.sqlunet.tts.LexUnit" method="LexUnit" />
     <pattern value="org.sqlunet.tts.SpeakProvider" method="makeUri" />
+    <pattern value="org.sqlunet.speak.Pronunciation" method="Pronunciation" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

@@ -9,6 +9,10 @@ import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
+import org.sqlunet.speak.Discover
+import org.sqlunet.speak.LexUnit
+import org.sqlunet.speak.TTS
+import org.sqlunet.speak.VoiceButton
 
 class ExamplesFragment : TextFragment() {
 
@@ -76,7 +80,7 @@ class ExamplesFragment : TextFragment() {
 
     private fun <P> soundButton(sb: SpannableStringBuilder, caption: String, data: P?, consumer: Discover.Consumer<P>): CharSequence {
 
-        VoiceButton.appendClickableImage(sb, R.drawable.ic_speak_button, caption, { consumer.accept(data) }, requireContext())
+        VoiceButton.appendClickableImage(sb, org.sqlunet.speak.R.drawable.ic_speak_button, caption, { consumer.accept(data) }, requireContext())
         return sb
     }
 }
