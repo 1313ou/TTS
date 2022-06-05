@@ -61,11 +61,10 @@ class ExamplesFragment : TextFragment() {
             }
             sb.append('\n')
 
-            binding.text.setMovementMethod(LinkMovementMethod.getInstance())
-            binding.text.setText(sb)
         }
         sb.append('\n')
-        sb.append('\n')
+        binding.text.setMovementMethod(LinkMovementMethod.getInstance())
+        binding.text.setText(sb)
     }
 
     private fun <P> soundButton(sb: SpannableStringBuilder, caption: String, data: P?, consumer: Discover.Consumer<P>): CharSequence {
