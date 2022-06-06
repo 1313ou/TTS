@@ -4,8 +4,8 @@
 
 		<MultiSelectListPreference
 			app:key="voice"
-			app:title="@string/voice_title"
-			app:useSimpleSummaryProvider="false" />
+			app:summary="@string/voices_summary"
+			app:title="@string/voice_title" />
 
 	</PreferenceCategory>
 

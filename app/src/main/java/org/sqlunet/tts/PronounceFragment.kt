@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import org.sqlunet.speak.Pronunciation
 import org.sqlunet.speak.TTS
+import org.sqlunet.speak.Voices
 import org.sqlunet.tts.databinding.FragmentPronounceBinding
 
 /**
@@ -86,7 +87,7 @@ class PronounceFragment : Fragment() {
                 val l1 = p.variety
                 val l0 = binding.locales.selectedItem.toString()
                 val lang = l1 ?: l0
-                val voice = VoiceSettingsFragment.findVoiceFor(lang, requireContext())
+                val voice = Voices.findVoiceFor(lang, requireContext())
                 Log.d("PRONOUNCE", String.format("%s /%s/, %s, %s", word, pronunciation, lang, voice))
                 TTS.pronounce(requireContext(), word, pronunciation, lang, if (voice != null && voice.isNotEmpty()) voice else null)
                 this.view?.let { it1 ->

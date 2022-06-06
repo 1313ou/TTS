@@ -5,7 +5,8 @@
 		<ListPreference
 			app:key="country"
 			app:title="@string/country_title"
-			app:useSimpleSummaryProvider="true" />
+			app:useSimpleSummaryProvider="true"
+			app:summary="@string/voices_summary"/>
 
 	</PreferenceCategory>
 

@@ -9,10 +9,7 @@ import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
-import org.sqlunet.speak.Discover
-import org.sqlunet.speak.LexUnit
-import org.sqlunet.speak.TTS
-import org.sqlunet.speak.VoiceButton
+import org.sqlunet.speak.*
 
 class ExamplesFragment : TextFragment() {
 
@@ -66,7 +63,7 @@ class ExamplesFragment : TextFragment() {
             sb.append(' ')
             soundButton(sb, lexunit.ipa, lexunit) { lu ->
                 Log.d("CLICK", "click <$lu>")
-                val voice = VoiceSettingsFragment.findVoiceFor(lu.variety, requireContext())
+                val voice = Voices.findVoiceFor(lu.variety, requireContext())
                 Log.d("PRONOUNCE", String.format("%s /%s/, country=%s, voice=%s", lu.word, lu.ipa, lu.variety, voice))
                 TTS.pronounce(requireContext(), lu.word, lu.ipa, lu.variety, if (voice != null && voice.isNotEmpty()) voice else null)
             }

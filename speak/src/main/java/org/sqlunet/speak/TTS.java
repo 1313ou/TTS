@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class TTS
 {
-	static public final String TAG = "__TTS__";
+	static public final String TAG = "TTS";
 
 	static public final Locale DEFAULT_LOCALE = Locale.UK;
 
@@ -82,7 +82,7 @@ public class TTS
 				{
 					if (locale != null && voice.getLocale().getCountry().equals(locale.getCountry()))
 					{
-						Log.e(TAG, "Set voice " + voiceName);
+						Log.d(TAG, "Set voice " + voiceName);
 						int result = tts.setVoice(voice);
 						if (result != TextToSpeech.SUCCESS)
 						{
@@ -136,7 +136,7 @@ public class TTS
 				}
 			});
 			Log.d(TAG, "pronounce " + written + " " + ipa + " " + '"' + text + '"');
-			tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, written);
+			tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, written + '_' + ipa);
 		});
 	}
 

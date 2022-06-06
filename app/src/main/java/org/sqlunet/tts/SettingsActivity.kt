@@ -4,7 +4,9 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import org.sqlunet.speak.CountrySettingsFragment
 import org.sqlunet.speak.Discover
+import org.sqlunet.speak.VoiceSettingsFragment
 
 class SettingsActivity : AppCompatActivity() {
 

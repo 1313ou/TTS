@@ -24,9 +24,6 @@
 	<!-- Settings -->
 	<string name="action_settings">Settings</string>
 	<string name="title_activity_settings">SettingsActivity</string>
-	<string name="speak_header">Speak</string>
-	<string name="country_title">Country</string>
-	<string name="voice_title">Voice</string>
 
 	<!-- Search -->
 	<string name="hint_search">Search</string>
